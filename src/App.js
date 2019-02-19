@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class Status extends Component {
   render(){
     return (
-      <div>
-        <p>Wow, Mi skribas en esperanto!</p>
+      <div className = "status">
+        <p>Uau!, Mi skribas en esperanto!</p>
         <p><button>Mi sxatas gin</button></p>
       </div>
     );
@@ -18,6 +17,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+        <Status/>
+        <Status/>
+        <Status/>
         <Status/>
         </header>
       </div>
