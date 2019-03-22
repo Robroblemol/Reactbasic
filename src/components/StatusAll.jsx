@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import StatusList from './StatusList';
 
+import './Status.css';
+
 export default class StatusAll extends Component {
     constructor(props){
       super(props);
@@ -15,6 +17,7 @@ export default class StatusAll extends Component {
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.delete = this.delete.bind(this);
     }
   handleChange(event){
     //console.log('event.target.value',event.target.value);
@@ -32,6 +35,11 @@ export default class StatusAll extends Component {
 
     });
   }
+  delete(index){
+    let copy =[...this.state.statuses];
+    copy.splice(index, 1);
+    this.setState({statuses: copy});
+  }
     render(){
       return (
           <div>
@@ -45,7 +53,8 @@ export default class StatusAll extends Component {
                 </div>
                 <div className="status">
                     <h1>ĉioj ŝtatojn</h1>
-                    <StatusList statuses= {this.state.statuses}/>
+                    <StatusList statuses= {this.state.statuses}
+                                delete={this.delete}/>
                 </div>
           </div>
         );
