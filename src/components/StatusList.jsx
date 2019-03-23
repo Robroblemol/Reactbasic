@@ -9,6 +9,7 @@ export default class StatusList extends Component {
           return <Status key= {index}
                          index={index}
                          mytext = {stateText}
+                         edit = {this.props.edit}
                          delete={this.props.delete}/> 
 
         })

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StatusList from './StatusList';
+//import EditForm from './EditForm';
 
 import './Status.css';
 
@@ -7,7 +8,9 @@ export default class StatusAll extends Component {
     constructor(props){
       super(props);
       this.state = {
-        newStatusText: '',   
+        editStatusText:'',
+        newStatusText: '', 
+        indexStatus:'',  
         statuses: [
           "Uau! Mi skribas en esperanto!", 
           "Mi volas lerni esperanto!", 
@@ -16,13 +19,21 @@ export default class StatusAll extends Component {
         ]
       }
       this.handleChange = this.handleChange.bind(this);
+      this.handleChangeEdit = this.handleChangeEdit.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.delete = this.delete.bind(this);
+      this.edit = this.edit.bind(this);
+      this.setEdit = this.setEdit.bind(this);
     }
   handleChange(event){
     //console.log('event.target.value',event.target.value);
     //debugger;
     this.setState({newStatusText: event.target.value});
+  }
+  handleChangeEdit(event){
+    //console.log('event.target.value',event.target.value);
+    //debugger;
+    this.setState({editStatusText: event.target.value});
   }
   handleSubmit(event){
     //hacce que e l form no lance a una nueva pagina (o refresque)
@@ -31,6 +42,8 @@ export default class StatusAll extends Component {
     let newStatuses = [this.state.newStatusText, ...this.state.statuses];
     this.setState({
       newStatusText: '',
+      indexStatus: '',
+      editStatusText:'',
       statuses: newStatuses,
 
     });
@@ -40,21 +53,61 @@ export default class StatusAll extends Component {
     copy.splice(index, 1);
     this.setState({statuses: copy});
   }
+  edit(index,textEdit){
+    console.log('index: ',{index},' Textedit: ',{textEdit})
+    this.setState({
+      editStatusText: textEdit,
+      indexStatus: index,
+    })
+    //copy.filter(index);
+
+  }
+  setEdit(event){
+    event.preventDefault();
+    console.log('indexStatus: ',
+                this.state.indexStatus,
+                'editStatusText ',
+                this.state.editStatusText);
+    let editStatus = [...this.state.statuses];
+    editStatus.splice(this.state.indexStatus,1,this.state.editStatusText);
+    
+    this.setState({
+      editStatusText:'',
+      newStatusText: '', 
+      indexStatus:'',
+      statuses: editStatus,  
+    })
+    
+
+}
     render(){
       return (
           <div>
                 <div className = "status">
                     <h1>Alboni nova ŝtaton</h1>
                     <form onSubmit={this.handleSubmit}>
-                        <input type= "text" value={this.state.newStatusText} 
-                            onChange={this.handleChange}   placeholder="Kio vi volas diri?"/>
+                        <input type= "text" 
+                               value={this.state.newStatusText} 
+                               onChange={this.handleChange}   placeholder="Kio vi volas diri?"/>
                         <button type= "submit">albonu ŝtaton</button>
                     </form>
+                </div>
+                <div className = "status">
+                <div className = "status">
+                      <h1>Redakti</h1>
+                      <form onSubmit={this.setEdit}>
+                          <input type= "text" 
+                                 value={this.state.editStatusText} 
+                                 onChange={this.handleChangeEdit}/>
+                          <button type= "submit">fari</button>
+                      </form>
+                  </div>
                 </div>
                 <div className="status">
                     <h1>ĉioj ŝtatojn</h1>
                     <StatusList statuses= {this.state.statuses}
-                                delete={this.delete}/>
+                                delete={this.delete}
+                                edit={this.edit}/>
                 </div>
           </div>
         );
