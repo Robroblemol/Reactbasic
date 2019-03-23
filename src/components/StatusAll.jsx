@@ -11,6 +11,7 @@ export default class StatusAll extends Component {
         editStatusText:'',
         newStatusText: '', 
         indexStatus:'',  
+        editflag:false,
         statuses: [
           "Uau! Mi skribas en esperanto!", 
           "Mi volas lerni esperanto!", 
@@ -57,6 +58,7 @@ export default class StatusAll extends Component {
     console.log('index: ',{index},' Textedit: ',{textEdit})
     this.setState({
       editStatusText: textEdit,
+      editflag:true,
       indexStatus: index,
     })
     //copy.filter(index);
@@ -68,16 +70,20 @@ export default class StatusAll extends Component {
                 this.state.indexStatus,
                 'editStatusText ',
                 this.state.editStatusText);
-    let editStatus = [...this.state.statuses];
-    editStatus.splice(this.state.indexStatus,1,this.state.editStatusText);
+    if(this.state.editflag){
+      let editStatus = [...this.state.statuses];
+      editStatus.splice(this.state.indexStatus,1,this.state.editStatusText);
     
-    this.setState({
-      editStatusText:'',
-      newStatusText: '', 
-      indexStatus:'',
-      statuses: editStatus,  
-    })
+      this.setState({
+        editStatusText:'',
+        newStatusText: '', 
+        indexStatus:'',
+        editflag:false,
+        statuses: editStatus,  
+       })
     
+    }
+
 
 }
     render(){
@@ -93,7 +99,7 @@ export default class StatusAll extends Component {
                     </form>
                 </div>
                 <div className = "status">
-                <div className = "status">
+                 <div className = "status">
                       <h1>Redakti</h1>
                       <form onSubmit={this.setEdit}>
                           <input type= "text" 

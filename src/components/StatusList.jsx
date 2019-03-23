@@ -11,7 +11,6 @@ export default class StatusList extends Component {
                          mytext = {stateText}
                          edit = {this.props.edit}
                          delete={this.props.delete}/> 
-
         })
       );
     }

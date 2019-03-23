@@ -10,14 +10,12 @@ export default class Status extends Component {
       this.delete = this.delete.bind(this);
       this.edit = this.edit.bind(this);
     }
-  
     like(){
       console.log('likes');
       this.setState({
         likes: this.state.likes+1
       })
     }
-
     delete() {
       console.log('index',this.props.index,this.props)
       this.props.delete(this.props.index);
